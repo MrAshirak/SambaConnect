@@ -1,0 +1,34 @@
+#!/bin/env bash
+
+args=("$@")
+
+#Return case not insert args
+[ -z "${args}" ]&& {
+	echo "Insert folder has mounted"
+	exit 0
+}
+
+dir="/mnt/${args}"
+
+#Create path has monted 
+[ ! -d ${dir} ]&&{  
+	mkdir ${dir}
+	chmod -R 700 ${dir}
+	chown -R ashirak:root ${dir}	
+	echo "Path created."
+}
+
+findmnt=$(findmnt | grep "/mnt/${args}")
+[ -z "${findmnt}" ] &&{
+	
+	{  
+		mount -t cifs //[your-ip or ddns]/${args[@]} /mnt/${args[@]} -o credentials=[your_credentials_file],dir_mode=0755,file_mode=0755 
+	} || {
+		set -e 
+		exit 0;
+	}
+	echo "${args} monted";
+	exit 0
+}
+
+echo "${args} has monted"
