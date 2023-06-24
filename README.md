@@ -1,6 +1,6 @@
 # Samba Connect 
 
-> Descrilção
+> Descrição
 
 Conexão e montagem de um diretório hospedado em um servidor samba.
 ---
